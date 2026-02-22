@@ -1,16 +1,20 @@
+--[[
+    MTJ_Carry — Trage-Script fuer ESX Legacy
+    (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+]]
+
 Config = {}
 
 Config = {
     Time        = 0.3,
     command     = 'carry',
-    acceptkey   = 246 ,
-    declinekey  = 182 ,
-    requestmessage = "Y to accept, L to refuse",
+    acceptkey   = 38,   -- E-Taste (INPUT_PICKUP) — gleich auf QWERTZ & QWERTY
+    declinekey  = 73,   -- X-Taste (INPUT_VEH_DUCK) — gleich auf QWERTZ & QWERTY
 }
 
 Notify = function(text, msgtype, IsServer, src)
     if IsServer then
-        TriggerClientEvent('SY_Carry:notify', src or source, text, msgtype)
+        TriggerClientEvent('MTJ_Carry:notify', src or source, text, msgtype)
     else
         SendNUIMessage({
             message  = 'showNotify',

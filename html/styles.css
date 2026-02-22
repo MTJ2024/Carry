@@ -1,3 +1,9 @@
+/*
+    MTJ_Carry — UI-Stylesheet
+    (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+    Warme Amber/Gold-Farbpalette
+*/
+
 @font-face {
   font-family: 'BebasNeueBold';
   src: url('./fonts/BebasNeueBold.ttf');
@@ -17,18 +23,16 @@
   -webkit-user-select: none;
 }
 
-html {
-  overflow: hidden;
-}
+html { overflow: hidden; }
 
 body {
   display: none;
-  color: #c0c0c4;
+  color: #d4cfc8;
   font-family: 'BebasNeueBold', sans-serif;
 }
 
-/* ── Full-screen overlay ── */
-.full-screen {
+/* ── Vollbild-Overlay ── */
+.mtj-overlay {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -36,283 +40,260 @@ body {
   justify-content: center;
 }
 
-/* ── Main container ── */
-.carrytype-container {
-  width: 68%;
-  max-width: 1050px;
-  background: linear-gradient(145deg, rgba(18, 4, 32, 0.96), rgba(8, 8, 22, 0.98), rgba(4, 22, 36, 0.96));
-  border: 1px solid rgba(110, 237, 237, 0.25);
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(110, 237, 237, 0.08);
-  padding: 30px 36px 36px;
+/* ── Hauptpanel ── */
+.mtj-panel {
+  width: 64%;
+  max-width: 980px;
+  background: linear-gradient(150deg, rgba(32, 22, 10, 0.97), rgba(16, 12, 8, 0.98), rgba(24, 18, 12, 0.97));
+  border: 1px solid rgba(232, 168, 73, 0.22);
+  border-radius: 14px;
+  box-shadow: 0 0 28px rgba(232, 168, 73, 0.06), 0 2px 12px rgba(0,0,0,0.4);
+  padding: 26px 32px 32px;
   position: relative;
   z-index: 9999;
-  animation: containerIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: mtjPanelIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes containerIn {
-  from { opacity: 0; transform: scale(0.94) translateY(14px); }
+@keyframes mtjPanelIn {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ── Header ── */
-.header {
+/* ── Panel-Kopf ── */
+.mtj-panel-head {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.CarryTypeMenuHeaderText {
+.mtj-panel-title {
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 32px;
-  color: #6eedee;
-  text-shadow: 0 0 18px rgba(110, 237, 237, 0.55), 0 0 4px rgba(110, 237, 237, 0.3);
-  letter-spacing: 0.12em;
+  font-size: 30px;
+  color: #e8a849;
+  text-shadow: 0 0 14px rgba(232, 168, 73, 0.5), 0 0 3px rgba(232, 168, 73, 0.25);
+  letter-spacing: 0.14em;
 }
 
-/* ── Close button ── */
-.btnQuit {
+/* ── Schliessen-Button ── */
+.mtj-close {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
   line-height: 1;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btnQuit:hover {
-  background: rgba(255, 80, 80, 0.15);
-  border-color: rgba(255, 80, 80, 0.4);
-  color: #ff6b6b;
+.mtj-close:hover {
+  background: rgba(220, 80, 60, 0.15);
+  border-color: rgba(220, 80, 60, 0.4);
+  color: #e05a50;
 }
 
-/* ── Cards grid ── */
-.cards {
+/* ── Kachel-Grid ── */
+.mtj-grid {
   display: flex;
-  gap: 22px;
+  gap: 18px;
   justify-content: center;
 }
 
-/* ── Individual card ── */
-.card {
+/* ── Einzelne Kachel ── */
+.mtj-tile {
   flex: 1;
-  max-width: 300px;
-  background: linear-gradient(160deg, rgba(100, 6, 155, 0.22), rgba(40, 4, 65, 0.28), rgba(6, 30, 50, 0.3));
-  border: 1px solid rgba(110, 237, 237, 0.18);
-  border-radius: 16px;
-  padding: 28px 20px 22px;
+  max-width: 280px;
+  background: linear-gradient(155deg, rgba(60, 40, 16, 0.25), rgba(30, 20, 10, 0.3), rgba(20, 14, 8, 0.35));
+  border: 1px solid rgba(232, 168, 73, 0.15);
+  border-radius: 12px;
+  padding: 24px 18px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   position: relative;
   overflow: hidden;
   transition: transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card::before {
+.mtj-tile::before {
   content: '';
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 16px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(110, 237, 237, 0.06) 0%, transparent 65%);
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232, 168, 73, 0.05) 0%, transparent 60%);
   pointer-events: none;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(110, 237, 237, 0.45);
-  box-shadow: 0 4px 20px rgba(110, 237, 237, 0.1);
+.mtj-tile:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232, 168, 73, 0.4);
+  box-shadow: 0 4px 18px rgba(232, 168, 73, 0.08);
 }
 
-/* ── Card image ── */
-.card-icon {
-  width: 120px;
-  height: 120px;
+/* ── Kachel-Bild ── */
+.mtj-tile-img {
+  width: 110px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
-.card-icon img {
+.mtj-tile-img img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(110, 237, 237, 0.2));
+  filter: drop-shadow(0 0 8px rgba(232, 168, 73, 0.15));
   transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-.card:hover .card-icon img {
-  filter: drop-shadow(0 0 16px rgba(110, 237, 237, 0.35));
-  transform: scale(1.05);
+.mtj-tile:hover .mtj-tile-img img {
+  filter: drop-shadow(0 0 14px rgba(232, 168, 73, 0.3));
+  transform: scale(1.04);
 }
 
-/* ── Card labels ── */
-.carrytextmain {
+/* ── Kachel-Text ── */
+.mtj-tile-name {
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 18px;
-  color: #c4a5f7;
-  text-shadow: 0 0 12px rgba(195, 110, 237, 0.4);
+  font-size: 17px;
+  color: #d4943a;
+  text-shadow: 0 0 10px rgba(212, 148, 58, 0.35);
   letter-spacing: 0.1em;
   text-align: center;
 }
 
-.card-desc {
+.mtj-tile-desc {
   font-family: 'BebasNeueBold', sans-serif;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
   letter-spacing: 0.06em;
   text-align: center;
 }
 
-/* ── Select button (shared) ── */
-.card-btn {
+/* ── Auswaehlen-Button ── */
+.mtj-tile-btn {
   margin-top: auto;
-  width: 70%;
-  padding: 10px 0;
+  width: 68%;
+  padding: 9px 0;
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 15px;
-  letter-spacing: 0.14em;
+  font-size: 14px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #6eedee;
-  text-shadow: 0 0 8px rgba(110, 237, 237, 0.4);
-  background: rgba(44, 157, 157, 0.12);
-  border: 1px solid rgba(110, 237, 237, 0.35);
-  border-radius: 10px;
+  color: #e8a849;
+  text-shadow: 0 0 6px rgba(232, 168, 73, 0.35);
+  background: rgba(140, 100, 40, 0.1);
+  border: 1px solid rgba(232, 168, 73, 0.3);
+  border-radius: 8px;
   cursor: pointer;
   outline: none;
   transition: all 0.25s ease;
 }
 
-.card-btn:hover {
+.mtj-tile-btn:hover {
   color: #fff;
-  background: rgba(110, 237, 237, 0.25);
-  border-color: rgba(110, 237, 237, 0.7);
-  box-shadow: 0 0 10px rgba(110, 237, 237, 0.2);
+  background: rgba(232, 168, 73, 0.2);
+  border-color: rgba(232, 168, 73, 0.6);
+  box-shadow: 0 0 8px rgba(232, 168, 73, 0.15);
 }
 
-.card-btn:active {
-  transform: scale(0.96);
-  background: rgba(110, 237, 237, 0.35);
+.mtj-tile-btn:active {
+  transform: scale(0.97);
+  background: rgba(232, 168, 73, 0.3);
 }
 
-/* ── Legacy class aliases — keep JS click selectors (.carry1select etc.) working ── */
-.carry1select,
-.carry2select,
-.carry3select {
-  /* No extra styles needed; these elements already have .card-btn */
-}
-
-/* ── Carry Request Prompt (accept/decline — no cursor) ── */
-.carry-request-prompt {
+/* ── Trage-Anfrage Prompt ── */
+.mtj-request {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  background: linear-gradient(145deg, rgba(18, 4, 32, 0.96), rgba(8, 8, 22, 0.98), rgba(4, 22, 36, 0.96));
-  border: 1px solid rgba(110, 237, 237, 0.3);
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(110, 237, 237, 0.1);
-  padding: 28px 24px 22px;
+  width: 320px;
+  background: linear-gradient(150deg, rgba(32, 22, 10, 0.97), rgba(16, 12, 8, 0.98), rgba(24, 18, 12, 0.97));
+  border: 1px solid rgba(232, 168, 73, 0.28);
+  border-radius: 14px;
+  box-shadow: 0 0 28px rgba(232, 168, 73, 0.08);
+  padding: 24px 22px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   z-index: 10000;
-  animation: containerIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: mtjPanelIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.carry-request-icon {
-  font-size: 28px;
-  line-height: 1;
-}
+.mtj-request-bell { font-size: 26px; line-height: 1; }
 
-.carry-request-title {
+.mtj-request-heading {
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 22px;
-  color: #6eedee;
-  text-shadow: 0 0 14px rgba(110, 237, 237, 0.5), 0 0 4px rgba(110, 237, 237, 0.3);
+  font-size: 20px;
+  color: #e8a849;
+  text-shadow: 0 0 12px rgba(232, 168, 73, 0.45), 0 0 3px rgba(232, 168, 73, 0.2);
   letter-spacing: 0.12em;
 }
 
-.carry-request-text {
-  font-family: 'BebasNeueBold', sans-serif;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+.mtj-request-msg {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.06em;
   text-align: center;
 }
 
-.carry-key-row {
+.mtj-request-keys {
   display: flex;
-  gap: 24px;
+  gap: 22px;
   justify-content: center;
   margin-top: 4px;
 }
 
-.carry-key {
+.mtj-key {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: 'BebasNeueBold', sans-serif;
-  font-size: 16px;
+  gap: 7px;
+  font-size: 15px;
   letter-spacing: 0.08em;
 }
 
-.carry-key.accept { color: #6eedaa; }
-.carry-key.decline { color: #ed6e78; }
+.mtj-key-yes { color: #7bc96f; }
+.mtj-key-no  { color: #e06060; }
 
-.key-badge {
-  width: 30px;
-  height: 30px;
+.mtj-keycap {
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
+  border-radius: 6px;
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.carry-key.accept .key-badge {
-  background: rgba(110, 237, 170, 0.12);
-  border: 1px solid rgba(110, 237, 170, 0.35);
-  color: #6eedaa;
+.mtj-key-yes .mtj-keycap {
+  background: rgba(123, 201, 111, 0.1);
+  border: 1px solid rgba(123, 201, 111, 0.3);
+  color: #7bc96f;
 }
 
-.carry-key.decline .key-badge {
-  background: rgba(237, 110, 120, 0.12);
-  border: 1px solid rgba(237, 110, 120, 0.35);
-  color: #ed6e78;
+.mtj-key-no .mtj-keycap {
+  background: rgba(224, 96, 96, 0.1);
+  border: 1px solid rgba(224, 96, 96, 0.3);
+  color: #e06060;
 }
 
-.carry-request-timer {
-  font-family: 'BebasNeueBold', sans-serif;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.25);
-  letter-spacing: 0.06em;
-  margin-top: 2px;
-}
-
-/* ── Built-in Notification ── */
-#notify-container {
+/* ── Benachrichtigungen ── */
+#mtj-notify-box {
   position: fixed;
   top: 30px;
   left: 50%;
@@ -325,102 +306,80 @@ body {
   pointer-events: none;
 }
 
-.carry-notify {
-  min-width: 280px;
-  max-width: 380px;
-  padding: 14px 20px 14px 16px;
-  border-radius: 12px;
-  font-family: 'BebasNeueBold', sans-serif;
-  font-size: 15px;
+.mtj-toast {
+  min-width: 260px;
+  max-width: 360px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
   letter-spacing: 0.04em;
-  color: #e0e0e4;
+  color: #ddd8d0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   pointer-events: auto;
-  animation: notifyIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: mtjToastIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.carry-notify.hiding {
+.mtj-toast.hiding {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-16px);
 }
 
-.carry-notify-icon {
-  font-size: 20px;
+.mtj-toast-icon {
+  font-size: 18px;
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 7px;
 }
 
-.carry-notify-text {
-  flex: 1;
-  line-height: 1.3;
-}
+.mtj-toast-body { flex: 1; line-height: 1.3; }
 
-.carry-notify-title {
+.mtj-toast-label {
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-bottom: 2px;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
-/* Type: success */
-.carry-notify.success {
-  background: linear-gradient(135deg, rgba(6, 30, 20, 0.95), rgba(8, 22, 16, 0.97));
-  border: 1px solid rgba(110, 237, 170, 0.35);
-  box-shadow: 0 0 20px rgba(110, 237, 170, 0.1);
+/* Erfolg */
+.mtj-toast.success {
+  background: linear-gradient(135deg, rgba(14, 28, 12, 0.96), rgba(10, 20, 10, 0.97));
+  border: 1px solid rgba(123, 201, 111, 0.3);
+  box-shadow: 0 0 16px rgba(123, 201, 111, 0.08);
 }
-.carry-notify.success .carry-notify-icon {
-  background: rgba(110, 237, 170, 0.12);
-  color: #6eedaa;
-}
-.carry-notify.success .carry-notify-title {
-  color: #6eedaa;
-}
+.mtj-toast.success .mtj-toast-icon { background: rgba(123, 201, 111, 0.1); color: #7bc96f; }
+.mtj-toast.success .mtj-toast-label { color: #7bc96f; }
 
-/* Type: error */
-.carry-notify.error {
-  background: linear-gradient(135deg, rgba(30, 6, 10, 0.95), rgba(22, 8, 12, 0.97));
-  border: 1px solid rgba(237, 110, 120, 0.35);
-  box-shadow: 0 0 20px rgba(237, 110, 120, 0.1);
+/* Fehler */
+.mtj-toast.error {
+  background: linear-gradient(135deg, rgba(28, 10, 10, 0.96), rgba(20, 8, 8, 0.97));
+  border: 1px solid rgba(224, 96, 96, 0.3);
+  box-shadow: 0 0 16px rgba(224, 96, 96, 0.08);
 }
-.carry-notify.error .carry-notify-icon {
-  background: rgba(237, 110, 120, 0.12);
-  color: #ed6e78;
-}
-.carry-notify.error .carry-notify-title {
-  color: #ed6e78;
-}
+.mtj-toast.error .mtj-toast-icon { background: rgba(224, 96, 96, 0.1); color: #e06060; }
+.mtj-toast.error .mtj-toast-label { color: #e06060; }
 
-/* Type: info (default) */
-.carry-notify.info {
-  background: linear-gradient(135deg, rgba(6, 14, 30, 0.95), rgba(8, 12, 22, 0.97));
-  border: 1px solid rgba(110, 180, 237, 0.35);
-  box-shadow: 0 0 20px rgba(110, 180, 237, 0.1);
+/* Info */
+.mtj-toast.info {
+  background: linear-gradient(135deg, rgba(28, 22, 10, 0.96), rgba(20, 16, 8, 0.97));
+  border: 1px solid rgba(232, 168, 73, 0.3);
+  box-shadow: 0 0 16px rgba(232, 168, 73, 0.08);
 }
-.carry-notify.info .carry-notify-icon {
-  background: rgba(110, 180, 237, 0.12);
-  color: #6eb4ed;
-}
-.carry-notify.info .carry-notify-title {
-  color: #6eb4ed;
-}
+.mtj-toast.info .mtj-toast-icon { background: rgba(232, 168, 73, 0.1); color: #e8a849; }
+.mtj-toast.info .mtj-toast-label { color: #e8a849; }
 
-@keyframes notifyIn {
-  from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+@keyframes mtjToastIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.96); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── Utility ── */
-button:focus,
-input:focus {
-  outline: 0;
-}
+/* ── Allgemein ── */
+button:focus, input:focus { outline: 0; }

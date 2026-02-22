@@ -1,17 +1,20 @@
-/* SY_Carry NUI — zero external dependencies (vanilla JS + XMLHttpRequest) */
+/*
+    MTJ_Carry — NUI-Script
+    (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+    Vanilla JS, keine externen Abhaengigkeiten
+*/
 
-/* ── GetParentResourceName polyfill (must be first — only used outside FiveM for testing) ── */
 if (typeof GetParentResourceName === 'undefined') {
-	window.GetParentResourceName = function() { return 'SY_Carry'; };
+	window.GetParentResourceName = function() { return 'MTJ_Carry'; };
 }
 
 function debug(msg) {
-	console.log('[SY_Carry] ' + msg);
+	console.log('[MTJ_Carry] ' + msg);
 }
 
-debug('scripts.js loading...');
+debug('scripts.js wird geladen...');
 
-/* ── DOM helpers ── */
+/* ── DOM-Helfer ── */
 
 function closeMain() {
 	document.body.style.display = 'none';
@@ -22,7 +25,7 @@ function openMain() {
 }
 
 function hideAll() {
-	var ids = ['carryreceiever', 'carryrequester', 'carryed', 'carrytype'];
+	var ids = ['carryrequest', 'carrytype'];
 	for (var i = 0; i < ids.length; i++) {
 		var el = document.getElementById(ids[i]);
 		if (el) el.style.display = 'none';
@@ -34,7 +37,7 @@ function showById(id) {
 	if (el) el.style.display = '';
 }
 
-/* ── NUI POST via XMLHttpRequest (most compatible with FiveM CEF) ── */
+/* ── NUI POST (XMLHttpRequest fuer CEF-Kompatibilitaet) ── */
 
 function nuiPost(endpoint, data) {
 	try {
@@ -46,7 +49,7 @@ function nuiPost(endpoint, data) {
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(JSON.stringify(data || {}));
 	} catch (e) {
-		debug('nuiPost error: ' + e);
+		debug('nuiPost Fehler: ' + e);
 	}
 }
 
@@ -54,34 +57,20 @@ function closeMenu() {
 	closeMain();
 	hideAll();
 	nuiPost('closetypeselect', {});
-	debug('closeMenu done');
+	debug('Menue geschlossen');
 }
 
-/* ── NUI message handler (registered immediately — no dependencies) ── */
+/* ── NUI-Nachrichten-Handler ── */
 
 window.addEventListener('message', function (event) {
 	var item = event.data;
 	if (!item || !item.message) return;
 
-	debug('NUI message: ' + item.message);
+	debug('NUI Nachricht: ' + item.message);
 
-	if (item.message === 'showcarryrequestreceiever') {
+	if (item.message === 'showcarryrequest') {
 		hideAll();
-		showById('carryreceiever');
-		openMain();
-	}
-
-	if (item.message === 'showcarryrequestrequester') {
-		hideAll();
-		showById('carryrequester');
-		var sec = document.getElementById('secondsremainingrequest');
-		if (sec) sec.innerHTML = item.remainingseconds;
-		openMain();
-	}
-
-	if (item.message === 'showcarryed') {
-		hideAll();
-		showById('carryed');
+		showById('carryrequest');
 		openMain();
 	}
 
@@ -97,9 +86,8 @@ window.addEventListener('message', function (event) {
 	}
 
 	if (item.message === 'hidecarryrequest') {
-		var el = document.getElementById('carryreceiever');
+		var el = document.getElementById('carryrequest');
 		if (el) el.style.display = 'none';
-		/* Don't hide body — a notification may follow immediately */
 	}
 
 	if (item.message === 'showNotify') {
@@ -107,43 +95,40 @@ window.addEventListener('message', function (event) {
 	}
 });
 
-/* ── Built-in Notification System ── */
+/* ── Benachrichtigungs-System ── */
 
 function showNotify(text, msgtype, duration) {
-	debug('showNotify: ' + msgtype + ' — ' + text);
-	var container = document.getElementById('notify-container');
+	debug('Benachrichtigung: ' + msgtype + ' — ' + text);
+	var container = document.getElementById('mtj-notify-box');
 	if (!container) return;
 
 	var icons = {
-		success: '✓',
-		error: '✗',
-		info: 'ℹ'
+		success: '\u2713',
+		error: '\u2717',
+		info: '\u2139'
 	};
 
 	var type = (msgtype === 'success' || msgtype === 'error') ? msgtype : 'info';
 
 	var el = document.createElement('div');
-	el.className = 'carry-notify ' + type;
+	el.className = 'mtj-toast ' + type;
 	el.innerHTML =
-		'<div class="carry-notify-icon">' + (icons[type] || 'ℹ') + '</div>' +
-		'<div>' +
-			'<div class="carry-notify-title">CARRY</div>' +
-			'<div class="carry-notify-text">' + escapeHtml(text) + '</div>' +
+		'<div class="mtj-toast-icon">' + (icons[type] || '\u2139') + '</div>' +
+		'<div class="mtj-toast-body">' +
+			'<div class="mtj-toast-label">TRAGEN</div>' +
+			'<div>' + escapeHtml(text) + '</div>' +
 		'</div>';
 
 	container.appendChild(el);
-
-	/* Body must be visible for notifications to show */
 	document.body.style.display = 'block';
 
 	setTimeout(function () {
 		el.classList.add('hiding');
 		setTimeout(function () {
 			if (el.parentNode) el.parentNode.removeChild(el);
-			/* Hide body again only if no menu panels are visible and no notifications remain */
 			if (container.children.length === 0) {
 				var anyVisible = false;
-				var ids = ['carryreceiever', 'carryrequester', 'carryed', 'carrytype'];
+				var ids = ['carryrequest', 'carrytype'];
 				for (var i = 0; i < ids.length; i++) {
 					var panel = document.getElementById(ids[i]);
 					if (panel && panel.style.display !== 'none') { anyVisible = true; break; }
@@ -160,15 +145,15 @@ function escapeHtml(str) {
 	return div.innerHTML;
 }
 
-/* ── Click handlers (after DOM ready) ── */
+/* ── Klick-Handler ── */
 
 document.addEventListener('DOMContentLoaded', function () {
-	debug('DOM ready — attaching click handlers');
+	debug('DOM bereit — Handler werden angebunden');
 
 	var closeBtn = document.querySelector('.closetypemenu');
 	if (closeBtn) {
 		closeBtn.addEventListener('click', function () {
-			debug('close button clicked');
+			debug('Schliessen geklickt');
 			closeMenu();
 		});
 	}
@@ -176,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var btn1 = document.querySelector('.carry1select');
 	if (btn1) {
 		btn1.addEventListener('click', function () {
-			debug('type1 selected');
+			debug('Typ 1 gewaehlt');
 			closeMain();
 			hideAll();
 			nuiPost('selecttype', { carrytype: 'type1' });
@@ -186,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var btn2 = document.querySelector('.carry2select');
 	if (btn2) {
 		btn2.addEventListener('click', function () {
-			debug('type2 selected');
+			debug('Typ 2 gewaehlt');
 			closeMain();
 			hideAll();
 			nuiPost('selecttype', { carrytype: 'type2' });
@@ -196,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var btn3 = document.querySelector('.carry3select');
 	if (btn3) {
 		btn3.addEventListener('click', function () {
-			debug('type3 selected');
+			debug('Typ 3 gewaehlt');
 			closeMain();
 			hideAll();
 			nuiPost('selecttype', { carrytype: 'type3' });
@@ -205,12 +190,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	document.addEventListener('keyup', function (e) {
 		if (e.key === 'Escape') {
-			debug('ESC pressed');
+			debug('ESC gedrueckt');
 			closeMenu();
 		}
 	});
 
-	debug('All handlers attached OK');
+	debug('Alle Handler angebunden');
 });
 
-debug('scripts.js loaded OK');
+debug('scripts.js geladen');

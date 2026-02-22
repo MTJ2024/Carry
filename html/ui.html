@@ -1,60 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css" type="text/css">
 </head>
 <body>
-	<div class="full-screen">
-		<div class="carrytype-container" id="carrytype" style="display:none">
-			<div class="header">
-				<h1 class="CarryTypeMenuHeaderText">CARRY MENU</h1>
-				<button type="button" class="btnQuit closetypemenu" aria-label="Close">&times;</button>
+	<div class="mtj-overlay">
+		<div class="mtj-panel" id="carrytype" style="display:none">
+			<div class="mtj-panel-head">
+				<span class="mtj-panel-title">TRAGEN</span>
+				<button type="button" class="mtj-close closetypemenu" aria-label="Schliessen">&times;</button>
 			</div>
-			<div class="cards">
-				<div class="card carrytype1">
-					<div class="card-icon">
-						<img src="img/carrytype1.png" alt="Carry 1">
+			<div class="mtj-grid">
+				<div class="mtj-tile">
+					<div class="mtj-tile-img">
+						<img src="img/carrytype1.png" alt="Schulter">
 					</div>
-					<div class="carrytextmain">CARRY</div>
-					<div class="card-desc">Fireman's carry over shoulder</div>
-					<button type="button" class="card-btn carry1select">Select</button>
+					<div class="mtj-tile-name">SCHULTER</div>
+					<div class="mtj-tile-desc">Feuerwehrgriff ueber die Schulter</div>
+					<button type="button" class="mtj-tile-btn carry1select">Auswaehlen</button>
 				</div>
-				<div class="card carrytype2">
-					<div class="card-icon">
-						<img src="img/carrytype2.png" alt="Carry 2">
+				<div class="mtj-tile">
+					<div class="mtj-tile-img">
+						<img src="img/carrytype2.png" alt="Arm">
 					</div>
-					<div class="carrytextmain">ARM SITBACK</div>
-					<div class="card-desc">Carry in arms</div>
-					<button type="button" class="card-btn carry2select">Select</button>
+					<div class="mtj-tile-name">AUF DEM ARM</div>
+					<div class="mtj-tile-desc">Auf den Armen tragen</div>
+					<button type="button" class="mtj-tile-btn carry2select">Auswaehlen</button>
 				</div>
-				<div class="card carrytype3">
-					<div class="card-icon">
-						<img src="img/carrytype3.png" alt="Carry 3">
+				<div class="mtj-tile">
+					<div class="mtj-tile-img">
+						<img src="img/carrytype3.png" alt="Huckepack">
 					</div>
-					<div class="carrytextmain">PIGGYBACK</div>
-					<div class="card-desc">Piggyback ride</div>
-					<button type="button" class="card-btn carry3select">Select</button>
+					<div class="mtj-tile-name">HUCKEPACK</div>
+					<div class="mtj-tile-desc">Huckepack tragen</div>
+					<button type="button" class="mtj-tile-btn carry3select">Auswaehlen</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Carry request accept/decline prompt (no cursor needed — uses keyboard keys) -->
-	<div class="carry-request-prompt" id="carryreceiever" style="display:none">
-		<div class="carry-request-icon">🔔</div>
-		<div class="carry-request-title">CARRY REQUEST</div>
-		<div class="carry-request-text">Someone wants to carry you!</div>
-		<div class="carry-key-row">
-			<div class="carry-key accept"><span class="key-badge">Y</span> Accept</div>
-			<div class="carry-key decline"><span class="key-badge">L</span> Decline</div>
+	<!-- Trage-Anfrage annehmen/ablehnen (kein Cursor noetig) -->
+	<div class="mtj-request" id="carryrequest" style="display:none">
+		<div class="mtj-request-bell">&#128276;</div>
+		<div class="mtj-request-heading">TRAGE-ANFRAGE</div>
+		<div class="mtj-request-msg">Jemand moechte dich tragen!</div>
+		<div class="mtj-request-keys">
+			<div class="mtj-key mtj-key-yes"><span class="mtj-keycap">E</span> Annehmen</div>
+			<div class="mtj-key mtj-key-no"><span class="mtj-keycap">X</span> Ablehnen</div>
 		</div>
-		<div class="carry-request-timer" id="carry-request-timer"></div>
 	</div>
 
-	<!-- Built-in notification container -->
-	<div id="notify-container"></div>
+	<!-- Benachrichtigungen -->
+	<div id="mtj-notify-box"></div>
 
 	<script src="scripts.js" type="text/javascript"></script>
 </body>

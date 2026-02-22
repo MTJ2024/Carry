@@ -1,79 +1,84 @@
+--[[
+    MTJ_Carry — Server-Script
+    (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+]]
+
 local function debugPrint(msg)
-	print('[SY_Carry:Server] ' .. tostring(msg))
+	print('[MTJ_Carry:Server] ' .. tostring(msg))
 end
 
-debugPrint('Server script loading...')
+debugPrint('Server-Script wird geladen...')
 
 local ESX = nil
 local initOk, initErr = pcall(function()
 	ESX = exports["es_extended"]:getSharedObject()
 end)
 if not initOk then
-	debugPrint('ERROR: ESX init failed: ' .. tostring(initErr))
+	debugPrint('FEHLER: ESX Init fehlgeschlagen: ' .. tostring(initErr))
 else
-	debugPrint('ESX loaded OK')
+	debugPrint('ESX geladen')
 end
 
-RegisterServerEvent('SY_Carry_anim1:server:Sync')
-AddEventHandler('SY_Carry_anim1:server:Sync', function(target, animationLib,animationLib2, animation, animation2, distans, distans2, height,targetSrc,length,spin,controlFlagSrc,controlFlagTarget,animFlagTarget)
-	debugPrint('anim1:Sync from ' .. tostring(source) .. ' target=' .. tostring(targetSrc))
-	if target ~= -1  then
-	    TriggerClientEvent('SY_Carry_anim1:SyncTarget', targetSrc, source, animationLib2, animation2, distans, distans2, height, length,spin,controlFlagTarget,animFlagTarget)
+RegisterServerEvent('MTJ_Carry:anim1:Sync')
+AddEventHandler('MTJ_Carry:anim1:Sync', function(target, animationLib, animationLib2, animation, animation2, distans, distans2, height, targetSrc, length, spin, controlFlagSrc, controlFlagTarget, animFlagTarget)
+	debugPrint('anim1:Sync von ' .. tostring(source) .. ' Ziel=' .. tostring(targetSrc))
+	if target ~= -1 then
+	    TriggerClientEvent('MTJ_Carry:anim1:SyncTarget', targetSrc, source, animationLib2, animation2, distans, distans2, height, length, spin, controlFlagTarget, animFlagTarget)
 	end
 end)
 
-RegisterServerEvent('SY_Carry_anim2:server:Sync')
-AddEventHandler('SY_Carry_anim2:server:Sync', function(target, animationLib, animation, animation2, distans, distans2, height,targetSrc,length,spin,controlFlagSrc,controlFlagTarget,animFlagTarget)
-	debugPrint('anim2:Sync from ' .. tostring(source) .. ' target=' .. tostring(targetSrc))
-	if target ~= -1  then
-	    TriggerClientEvent('SY_Carry_anim2:SyncTarget', targetSrc, source, animationLib, animation2, distans, distans2, height, length,spin,controlFlagTarget,animFlagTarget)
-	    TriggerClientEvent('SY_Carry_anim2:Sync', source, animationLib, animation,length,controlFlagSrc,animFlagTarget)
+RegisterServerEvent('MTJ_Carry:anim2:Sync')
+AddEventHandler('MTJ_Carry:anim2:Sync', function(target, animationLib, animation, animation2, distans, distans2, height, targetSrc, length, spin, controlFlagSrc, controlFlagTarget, animFlagTarget)
+	debugPrint('anim2:Sync von ' .. tostring(source) .. ' Ziel=' .. tostring(targetSrc))
+	if target ~= -1 then
+	    TriggerClientEvent('MTJ_Carry:anim2:SyncTarget', targetSrc, source, animationLib, animation2, distans, distans2, height, length, spin, controlFlagTarget, animFlagTarget)
+	    TriggerClientEvent('MTJ_Carry:anim2:Play', source, animationLib, animation, length, controlFlagSrc, animFlagTarget)
 	end
 end)
 
-RegisterServerEvent('SY_Carry:onhandanim')
-AddEventHandler('SY_Carry:onhandanim', function(target)
-	debugPrint('onhandanim from ' .. tostring(source) .. ' target=' .. tostring(target))
+RegisterServerEvent('MTJ_Carry:onhandanim')
+AddEventHandler('MTJ_Carry:onhandanim', function(target)
+	debugPrint('onhandanim von ' .. tostring(source) .. ' Ziel=' .. tostring(target))
 	local ok, err = pcall(function()
 		local targetPlayer = ESX.GetPlayerFromId(target)
-		TriggerClientEvent('SY_Carry:onhandanimcarry', targetPlayer.source, source)
+		TriggerClientEvent('MTJ_Carry:onhandanimcarry', targetPlayer.source, source)
 	end)
 	if not ok then
-		debugPrint('ERROR in onhandanim: ' .. tostring(err))
+		debugPrint('FEHLER in onhandanim: ' .. tostring(err))
 	end
 end)
 
-RegisterServerEvent('SY_Carry_Anim:stop')
-AddEventHandler('SY_Carry_Anim:stop', function(targetSrc)
-	debugPrint('Anim:stop from ' .. tostring(source) .. ' target=' .. tostring(targetSrc))
-	TriggerClientEvent('SY_Carry_Anim:client:stop', targetSrc)
+RegisterServerEvent('MTJ_Carry:anim:stop')
+AddEventHandler('MTJ_Carry:anim:stop', function(targetSrc)
+	debugPrint('Anim:stop von ' .. tostring(source) .. ' Ziel=' .. tostring(targetSrc))
+	TriggerClientEvent('MTJ_Carry:anim:clientstop', targetSrc)
 end)
 
----------[REQUEST]---------
-RegisterServerEvent("SY_animations:animrequest")
-AddEventHandler("SY_animations:animrequest", function(target,reqstcarryanim)
-	debugPrint('animrequest from ' .. tostring(source) .. ' to ' .. tostring(target) .. ' type=' .. tostring(reqstcarryanim))
-	local revicer = source 
-	TriggerClientEvent("SY_animations:reciverrequest", target, revicer,reqstcarryanim)
+---------[ANFRAGE]---------
+RegisterServerEvent("MTJ_Carry:animrequest")
+AddEventHandler("MTJ_Carry:animrequest", function(target, reqstcarryanim)
+	debugPrint('Anfrage von ' .. tostring(source) .. ' an ' .. tostring(target) .. ' Typ=' .. tostring(reqstcarryanim))
+	local sender = source
+	TriggerClientEvent("MTJ_Carry:receiverequest", target, sender, reqstcarryanim)
 end)
 
-RegisterServerEvent("SY_animations:animationaccepted") 
-AddEventHandler("SY_animations:animationaccepted", function(target,reqstcarryanim)
-	debugPrint('animationaccepted from ' .. tostring(source) .. ' target=' .. tostring(target))
+RegisterServerEvent("MTJ_Carry:animationaccepted")
+AddEventHandler("MTJ_Carry:animationaccepted", function(target, reqstcarryanim)
+	debugPrint('Animation angenommen von ' .. tostring(source) .. ' Ziel=' .. tostring(target))
 	local player2 = source
-	TriggerClientEvent("SY_animations:playsharedsource", target,reqstcarryanim, player2) 
+	TriggerClientEvent("MTJ_Carry:playsharedsource", target, reqstcarryanim, player2)
 end)
 
-RegisterServerEvent("SY_animations:animationdenied") 
-AddEventHandler("SY_animations:animationdenied", function(source)
-	debugPrint('animationdenied from ' .. tostring(source))
+RegisterServerEvent("MTJ_Carry:animationdenied")
+AddEventHandler("MTJ_Carry:animationdenied", function(source)
+	debugPrint('Animation abgelehnt von ' .. tostring(source))
 	local ok, err = pcall(function()
 		local xPlayer = ESX.GetPlayerFromId(source)
-		Notify("Your Request Has Been Denied",'error',true,source)
+		Notify("Deine Anfrage wurde abgelehnt", 'error', true, source)
 	end)
 	if not ok then
-		debugPrint('ERROR in animationdenied: ' .. tostring(err))
+		debugPrint('FEHLER in animationdenied: ' .. tostring(err))
 	end
 end)
 
-debugPrint('Server script loaded OK')
+debugPrint('Server-Script geladen')
