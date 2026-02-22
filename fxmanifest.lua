@@ -1,14 +1,25 @@
+--[[
+    ╔══════════════════════════════════════════════════╗
+    ║  MTJ_Carry v2.0                                 ║
+    ║  (c) 2024 MTJ2024 — Alle Rechte vorbehalten     ║
+    ║  https://github.com/MTJ2024/Carry               ║
+    ║                                                  ║
+    ║  Dieses Script ist urheberrechtlich geschuetzt.  ║
+    ║  Unbefugtes Kopieren, Aendern oder Verbreiten    ║
+    ║  ohne Genehmigung ist untersagt.                 ║
+    ╚══════════════════════════════════════════════════╝
+]]
+
 fx_version  'adamant'
-use_experimental_fxv2_oal 'yes'
 lua54       'yes'
 game        'gta5'
 
-name        'SY_CARRY'
-author      'SYNO'
-version     '1.3'
-license     'GNU General Public License v3.0'
-repository  'https://github.com/SYNO-SY/SY_Carry'
-description 'A Carry Script With Request System for Fivem RP Server'
+name        'MTJ_Carry'
+author      'MTJ2024'
+version     '2.0'
+license     'MIT'
+repository  'https://github.com/MTJ2024/Carry'
+description 'Trage-Script mit Anfrage-System fuer FiveM RP Server (ESX Legacy)'
 
 ui_page 'html/ui.html'
 
@@ -16,7 +27,6 @@ files {
 	'html/ui.html',
 	'html/styles.css',
 	'html/scripts.js',
-	'html/debounce.min.js',
 	'html/fonts/*.ttf',
 	'html/fonts/*.otf',
 	'html/img/*.png'
@@ -33,6 +43,4 @@ server_scripts {
 client_scripts {
 	'client/*.lua'
 }
-
-
 
