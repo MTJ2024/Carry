@@ -220,6 +220,112 @@ body {
   /* No extra styles needed; these elements already have .card-btn */
 }
 
+/* ── Built-in Notification ── */
+#notify-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.carry-notify {
+  min-width: 280px;
+  max-width: 380px;
+  padding: 14px 20px 14px 16px;
+  border-radius: 12px;
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: #e0e0e4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  animation: notifyIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carry-notify.hiding {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.carry-notify-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.carry-notify-text {
+  flex: 1;
+  line-height: 1.3;
+}
+
+.carry-notify-title {
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 2px;
+  opacity: 0.7;
+}
+
+/* Type: success */
+.carry-notify.success {
+  background: linear-gradient(135deg, rgba(6, 30, 20, 0.95), rgba(8, 22, 16, 0.97));
+  border: 1px solid rgba(110, 237, 170, 0.35);
+  box-shadow: 0 0 20px rgba(110, 237, 170, 0.1);
+}
+.carry-notify.success .carry-notify-icon {
+  background: rgba(110, 237, 170, 0.12);
+  color: #6eedaa;
+}
+.carry-notify.success .carry-notify-title {
+  color: #6eedaa;
+}
+
+/* Type: error */
+.carry-notify.error {
+  background: linear-gradient(135deg, rgba(30, 6, 10, 0.95), rgba(22, 8, 12, 0.97));
+  border: 1px solid rgba(237, 110, 120, 0.35);
+  box-shadow: 0 0 20px rgba(237, 110, 120, 0.1);
+}
+.carry-notify.error .carry-notify-icon {
+  background: rgba(237, 110, 120, 0.12);
+  color: #ed6e78;
+}
+.carry-notify.error .carry-notify-title {
+  color: #ed6e78;
+}
+
+/* Type: info (default) */
+.carry-notify.info {
+  background: linear-gradient(135deg, rgba(6, 14, 30, 0.95), rgba(8, 12, 22, 0.97));
+  border: 1px solid rgba(110, 180, 237, 0.35);
+  box-shadow: 0 0 20px rgba(110, 180, 237, 0.1);
+}
+.carry-notify.info .carry-notify-icon {
+  background: rgba(110, 180, 237, 0.12);
+  color: #6eb4ed;
+}
+.carry-notify.info .carry-notify-title {
+  color: #6eb4ed;
+}
+
+@keyframes notifyIn {
+  from { opacity: 0; transform: translateX(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
 /* ── Utility ── */
 button:focus,
 input:focus {

@@ -95,7 +95,64 @@ window.addEventListener('message', function (event) {
 		closeMain();
 		hideAll();
 	}
+
+	if (item.message === 'showNotify') {
+		showNotify(item.text || '', item.msgtype || 'info', item.duration || 5000);
+	}
 });
+
+/* ── Built-in Notification System ── */
+
+function showNotify(text, msgtype, duration) {
+	debug('showNotify: ' + msgtype + ' — ' + text);
+	var container = document.getElementById('notify-container');
+	if (!container) return;
+
+	var icons = {
+		success: '✓',
+		error: '✗',
+		info: 'ℹ'
+	};
+
+	var type = (msgtype === 'success' || msgtype === 'error') ? msgtype : 'info';
+
+	var el = document.createElement('div');
+	el.className = 'carry-notify ' + type;
+	el.innerHTML =
+		'<div class="carry-notify-icon">' + (icons[type] || 'ℹ') + '</div>' +
+		'<div>' +
+			'<div class="carry-notify-title">CARRY</div>' +
+			'<div class="carry-notify-text">' + escapeHtml(text) + '</div>' +
+		'</div>';
+
+	container.appendChild(el);
+
+	/* Body must be visible for notifications to show */
+	document.body.style.display = 'block';
+
+	setTimeout(function () {
+		el.classList.add('hiding');
+		setTimeout(function () {
+			if (el.parentNode) el.parentNode.removeChild(el);
+			/* Hide body again only if no menu panels are visible and no notifications remain */
+			if (container.children.length === 0) {
+				var anyVisible = false;
+				var ids = ['carryreceiever', 'carryrequester', 'carryed', 'carrytype'];
+				for (var i = 0; i < ids.length; i++) {
+					var panel = document.getElementById(ids[i]);
+					if (panel && panel.style.display !== 'none') { anyVisible = true; break; }
+				}
+				if (!anyVisible) document.body.style.display = 'none';
+			}
+		}, 300);
+	}, duration || 5000);
+}
+
+function escapeHtml(str) {
+	var div = document.createElement('div');
+	div.appendChild(document.createTextNode(str));
+	return div.innerHTML;
+}
 
 /* ── Click handlers (after DOM ready) ── */
 

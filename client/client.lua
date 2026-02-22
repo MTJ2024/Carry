@@ -28,6 +28,18 @@ AddEventHandler('onResourceStop', function(resourceName)
 	end
 end)
 
+-- Built-in notification receiver (from server)
+RegisterNetEvent('SY_Carry:notify')
+AddEventHandler('SY_Carry:notify', function(text, msgtype)
+	debugPrint('Notify: ' .. tostring(msgtype) .. ' — ' .. tostring(text))
+	SendNUIMessage({
+		message  = 'showNotify',
+		text     = text,
+		msgtype  = msgtype or 'info',
+		duration = 5000
+	})
+end)
+
 -----[REQUEST]-------
 RegisterNetEvent("SY_Carry:senderrequest")
 AddEventHandler("SY_Carry:senderrequest", function(CarryTypeChoosed)
