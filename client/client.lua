@@ -87,8 +87,11 @@ AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
     debugPrint('reciverrequest received, type=' .. tostring(reqstcarryanim))
     isRequestAnim = true
     PlaySound(-1, "NAV", "HUD_AMMO_SHOP_SOUNDSET", 0, 0, 1)
-	Notify(Config.requestmessage,'info')
-    local waiting = 0 
+
+    -- Show the accept/decline prompt in NUI (no cursor needed — keyboard keys)
+    SendNUIMessage({message = 'showcarryrequestreceiever'})
+
+    local waiting = 0
     CreateThread(function()
         while isRequestAnim do
             Wait(0)
@@ -98,6 +101,7 @@ AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
 
             if IsDisabledControlJustPressed(0, Config.acceptkey) then
                 debugPrint('Accept key pressed (control ' .. Config.acceptkey .. ')')
+                SendNUIMessage({message = 'hidecarryrequest'})
                 Notify("Request accepted",'success')
                 if not ESX or not ESX.Game then
                     debugPrint('ERROR: ESX.Game not available for accept')
@@ -115,6 +119,7 @@ AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
                 end
             elseif IsDisabledControlJustPressed(0, Config.declinekey) then
                 debugPrint('Decline key pressed (control ' .. Config.declinekey .. ')')
+                SendNUIMessage({message = 'hidecarryrequest'})
                 Notify("Request denied.",'error')
                 if ESX and ESX.Game then
                     local target = ESX.Game.GetClosestPlayer()
@@ -127,11 +132,12 @@ AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
         debugPrint('reciverrequest loop ended')
     end)
     CreateThread(function()
-        while isRequestAnim do 
+        while isRequestAnim do
             Wait(100)
             waiting = waiting + 1
             if waiting > 100 then
                 isRequestAnim = false
+                SendNUIMessage({message = 'hidecarryrequest'})
                 Notify("Request has expired",'info')
                 debugPrint('Request expired after timeout')
             end

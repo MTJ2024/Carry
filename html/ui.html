@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="full-screen">
-		<div class="carrytype-container" id="carrytype">
+		<div class="carrytype-container" id="carrytype" style="display:none">
 			<div class="header">
 				<h1 class="CarryTypeMenuHeaderText">CARRY MENU</h1>
 				<button type="button" class="btnQuit closetypemenu" aria-label="Close">&times;</button>
@@ -40,6 +40,19 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Carry request accept/decline prompt (no cursor needed — uses keyboard keys) -->
+	<div class="carry-request-prompt" id="carryreceiever" style="display:none">
+		<div class="carry-request-icon">🔔</div>
+		<div class="carry-request-title">CARRY REQUEST</div>
+		<div class="carry-request-text">Someone wants to carry you!</div>
+		<div class="carry-key-row">
+			<div class="carry-key accept"><span class="key-badge">Y</span> Accept</div>
+			<div class="carry-key decline"><span class="key-badge">L</span> Decline</div>
+		</div>
+		<div class="carry-request-timer" id="carry-request-timer"></div>
+	</div>
+
 	<!-- Built-in notification container -->
 	<div id="notify-container"></div>
 

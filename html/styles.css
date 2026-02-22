@@ -220,14 +220,107 @@ body {
   /* No extra styles needed; these elements already have .card-btn */
 }
 
+/* ── Carry Request Prompt (accept/decline — no cursor) ── */
+.carry-request-prompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  background: linear-gradient(145deg, rgba(18, 4, 32, 0.96), rgba(8, 8, 22, 0.98), rgba(4, 22, 36, 0.96));
+  border: 1px solid rgba(110, 237, 237, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(110, 237, 237, 0.1);
+  padding: 28px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  animation: containerIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.carry-request-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.carry-request-title {
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 22px;
+  color: #6eedee;
+  text-shadow: 0 0 14px rgba(110, 237, 237, 0.5), 0 0 4px rgba(110, 237, 237, 0.3);
+  letter-spacing: 0.12em;
+}
+
+.carry-request-text {
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.carry-key-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.carry-key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+
+.carry-key.accept { color: #6eedaa; }
+.carry-key.decline { color: #ed6e78; }
+
+.key-badge {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 14px;
+}
+
+.carry-key.accept .key-badge {
+  background: rgba(110, 237, 170, 0.12);
+  border: 1px solid rgba(110, 237, 170, 0.35);
+  color: #6eedaa;
+}
+
+.carry-key.decline .key-badge {
+  background: rgba(237, 110, 120, 0.12);
+  border: 1px solid rgba(237, 110, 120, 0.35);
+  color: #ed6e78;
+}
+
+.carry-request-timer {
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
 /* ── Built-in Notification ── */
 #notify-container {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 99999;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   pointer-events: none;
 }
@@ -251,7 +344,7 @@ body {
 
 .carry-notify.hiding {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateY(-20px);
 }
 
 .carry-notify-icon {
@@ -322,8 +415,8 @@ body {
 }
 
 @keyframes notifyIn {
-  from { opacity: 0; transform: translateX(40px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+  from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ── Utility ── */

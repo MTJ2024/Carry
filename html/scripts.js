@@ -96,6 +96,12 @@ window.addEventListener('message', function (event) {
 		hideAll();
 	}
 
+	if (item.message === 'hidecarryrequest') {
+		var el = document.getElementById('carryreceiever');
+		if (el) el.style.display = 'none';
+		/* Don't hide body — a notification may follow immediately */
+	}
+
 	if (item.message === 'showNotify') {
 		showNotify(item.text || '', item.msgtype || 'info', item.duration || 5000);
 	}
