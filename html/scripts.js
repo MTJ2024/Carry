@@ -1,92 +1,157 @@
-function closeMain() {
-	$("body").css("display", "none");
+/* SY_Carry NUI — zero jQuery dependency (vanilla JS only) */
+
+function debug(msg) {
+	console.log('[SY_Carry] ' + msg);
 }
+
+debug('scripts.js loading...');
+
+/* ── DOM helpers ── */
+
+function closeMain() {
+	document.body.style.display = 'none';
+}
+
 function openMain() {
-	$("body").css("display", "block");
+	document.body.style.display = 'block';
 }
 
 function hideAll() {
-	$('#carryreceiever').hide();
-	$('#carryrequester').hide();
-	$('#carryed').hide();
-	$('#carrytype').hide();
+	var ids = ['carryreceiever', 'carryrequester', 'carryed', 'carrytype'];
+	for (var i = 0; i < ids.length; i++) {
+		var el = document.getElementById(ids[i]);
+		if (el) el.style.display = 'none';
+	}
+}
+
+function showById(id) {
+	var el = document.getElementById(id);
+	if (el) el.style.display = '';
+}
+
+/* ── NUI POST helper (no jQuery needed) ── */
+
+function nuiPost(endpoint, data) {
+	try {
+		var url = 'https://' + GetParentResourceName() + '/' + endpoint;
+		fetch(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data || {})
+		}).then(function(resp) {
+			debug('POST ' + endpoint + ' ok');
+		}).catch(function(err) {
+			debug('POST ' + endpoint + ' error: ' + err);
+		});
+	} catch (e) {
+		debug('nuiPost exception: ' + e);
+	}
 }
 
 function closeMenu() {
 	closeMain();
 	hideAll();
-	$.post('http://SY_Carry/closetypeselect', JSON.stringify({}));
+	nuiPost('closetypeselect', {});
+	debug('closeMenu done');
 }
 
-$(document).ready(function() {
+/* ── NUI message handler (MUST be registered first — before any jQuery code) ── */
 
-	$(".closetypemenu").click(function(){
-	    closeMenu();
-	});
+window.addEventListener('message', function (event) {
+	var item = event.data;
+	if (!item || !item.message) return;
 
-	$(".carry1select").click(function () {
+	debug('NUI message: ' + item.message);
+
+	if (item.message === 'showcarryrequestreceiever') {
+		hideAll();
+		showById('carryreceiever');
+		openMain();
+	}
+
+	if (item.message === 'showcarryrequestrequester') {
+		hideAll();
+		showById('carryrequester');
+		var sec = document.getElementById('secondsremainingrequest');
+		if (sec) sec.innerHTML = item.remainingseconds;
+		openMain();
+	}
+
+	if (item.message === 'showcarryed') {
+		hideAll();
+		showById('carryed');
+		openMain();
+	}
+
+	if (item.message === 'showtypes') {
+		hideAll();
+		showById('carrytype');
+		openMain();
+	}
+
+	if (item.message === 'hide') {
 		closeMain();
 		hideAll();
-		$.post('http://SY_Carry/selecttype', JSON.stringify({
-			carrytype: "type1"
-		}));
-	});
+	}
+});
 
-	$(".carry2select").click(function () {
-		closeMain();
-		hideAll();
-		$.post('http://SY_Carry/selecttype', JSON.stringify({
-			carrytype: "type2"
-		}));
-	});
+/* ── Click handlers (after DOM ready) ── */
 
-	$(".carry3select").click(function () {
-		closeMain();
-		hideAll();
-		$.post('http://SY_Carry/selecttype', JSON.stringify({
-			carrytype: "type3"
-		}));
-	});
+document.addEventListener('DOMContentLoaded', function () {
+	debug('DOM ready — attaching click handlers');
 
-	$(document).keyup(function(e) {
-		if (e.key === "Escape") {
+	var closeBtn = document.querySelector('.closetypemenu');
+	if (closeBtn) {
+		closeBtn.addEventListener('click', function () {
+			debug('close button clicked');
+			closeMenu();
+		});
+	}
+
+	var btn1 = document.querySelector('.carry1select');
+	if (btn1) {
+		btn1.addEventListener('click', function () {
+			debug('type1 selected');
+			closeMain();
+			hideAll();
+			nuiPost('selecttype', { carrytype: 'type1' });
+		});
+	}
+
+	var btn2 = document.querySelector('.carry2select');
+	if (btn2) {
+		btn2.addEventListener('click', function () {
+			debug('type2 selected');
+			closeMain();
+			hideAll();
+			nuiPost('selecttype', { carrytype: 'type2' });
+		});
+	}
+
+	var btn3 = document.querySelector('.carry3select');
+	if (btn3) {
+		btn3.addEventListener('click', function () {
+			debug('type3 selected');
+			closeMain();
+			hideAll();
+			nuiPost('selecttype', { carrytype: 'type3' });
+		});
+	}
+
+	document.addEventListener('keyup', function (e) {
+		if (e.key === 'Escape') {
+			debug('ESC pressed');
 			closeMenu();
 		}
 	});
 
+	debug('All handlers attached OK');
 });
 
-window.addEventListener('message', function (event) {
+/* ── GetParentResourceName polyfill for NUI ── */
 
-	var item = event.data;
+if (typeof GetParentResourceName === 'undefined') {
+	function GetParentResourceName() { return 'SY_Carry'; }
+}
 
-	if (item.message == "showcarryrequestreceiever") {
-		hideAll();
-		$('#carryreceiever').show();
-		openMain();
-	}
-
-	if (item.message == "showcarryrequestrequester") {
-		hideAll();
-		$('#carryrequester').show();
-		document.getElementById("secondsremainingrequest").innerHTML = item.remainingseconds;
-		openMain();
-	}
-
-	if (item.message == "showcarryed") {
-		hideAll();
-		$('#carryed').show();
-		openMain();
-	}
-
-	if (item.message == "showtypes") {
-		hideAll();
-		$('#carrytype').show();
-		openMain();
-	}
-
-	if (item.message == "hide") {
-		closeMain();
-		hideAll();
-	}
-});
+debug('scripts.js loaded OK');

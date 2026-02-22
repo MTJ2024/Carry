@@ -1,42 +1,78 @@
-ESX = exports["es_extended"]:getSharedObject()
+local function debugPrint(msg)
+	print('[SY_Carry] ' .. tostring(msg))
+end
+
+debugPrint('Client script loading...')
+
+local ESX = nil
+local initOk, initErr = pcall(function()
+	ESX = exports["es_extended"]:getSharedObject()
+end)
+if not initOk then
+	debugPrint('ERROR: ESX init failed: ' .. tostring(initErr))
+	debugPrint('Make sure es_extended is started before SY_Carry!')
+else
+	debugPrint('ESX loaded OK')
+end
+
 local PlayerData              = {}
 local carryingBackInProgress  = false
 local accepted = false
 local sycarry = true
 
+-- Safety: release NUI focus if resource stops
+AddEventHandler('onResourceStop', function(resourceName)
+	if GetCurrentResourceName() == resourceName then
+		debugPrint('Resource stopping — releasing NUI focus')
+		SetNuiFocus(false, false)
+	end
+end)
+
 -----[REQUEST]-------
 RegisterNetEvent("SY_Carry:senderrequest")
 AddEventHandler("SY_Carry:senderrequest", function(CarryTypeChoosed)
+	debugPrint('senderrequest triggered, type=' .. tostring(CarryTypeChoosed))
 	local reqstcarryanim = CarryTypeChoosed
-    while true do
-		Wait(1)
-		if reqstcarryanim ~= nil then
-			local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-			if closestPlayer ~= -1 and closestDistance <= 2.5 then
-				ESX.ShowHelpNotification("~INPUT_PICKUP~ Suggest interactions \n~INPUT_VEH_DUCK~ Cancel")
-				target_id = GetPlayerPed(closestPlayer)
-				playerX, playerY, playerZ = table.unpack(GetEntityCoords(target_id))
-				DrawMarker(0, playerX, playerY, playerZ+1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.2, 0.2, 0.2, 155, 77, 219, 70, true, true, 2, true, false, false, false)
-				if IsControlJustPressed(0, 38) then
-					TriggerServerEvent("SY_animations:animrequest", GetPlayerServerId(closestPlayer),reqstcarryanim)
-					Notify("Request send",'sucess')
+	CreateThread(function()
+		while true do
+			Wait(1)
+			if reqstcarryanim ~= nil then
+				if not ESX or not ESX.Game then
+					debugPrint('ERROR: ESX.Game not available')
 					break
 				end
-				if IsControlJustPressed(0, 73) then
-                    ClearPedTasks(PlayerPedId())
-                    Wait(200)
-                    break
-                end
-			else
-				Notify("No one nearby",'error')
-				break
+				local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+				if closestPlayer ~= -1 and closestDistance <= 2.5 then
+					ESX.ShowHelpNotification("~INPUT_PICKUP~ Suggest interactions \n~INPUT_VEH_DUCK~ Cancel")
+					target_id = GetPlayerPed(closestPlayer)
+					playerX, playerY, playerZ = table.unpack(GetEntityCoords(target_id))
+					DrawMarker(0, playerX, playerY, playerZ+1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.2, 0.2, 0.2, 155, 77, 219, 70, true, true, 2, true, false, false, false)
+					if IsControlJustPressed(0, 38) then
+						TriggerServerEvent("SY_animations:animrequest", GetPlayerServerId(closestPlayer),reqstcarryanim)
+						Notify("Request send",'sucess')
+						debugPrint('Request sent to player')
+						break
+					end
+					if IsControlJustPressed(0, 73) then
+						ClearPedTasks(PlayerPedId())
+						Wait(200)
+						debugPrint('Request cancelled by player')
+						break
+					end
+				else
+					Notify("No one nearby",'error')
+					debugPrint('No player nearby')
+					break
+				end
 			end
 		end
-	end
+		debugPrint('senderrequest loop ended')
+	end)
 end)
 
 RegisterNetEvent("SY_animations:reciverrequest")
 AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
+    debugPrint('reciverrequest received, type=' .. tostring(reqstcarryanim))
     isRequestAnim = true
     PlaySound(-1, "NAV", "HUD_AMMO_SHOP_SOUNDSET", 0, 0, 1)
 	Notify(Config.requestmessage,'info')
@@ -85,6 +121,7 @@ end)
 
 RegisterNetEvent("SY_animations:playsharedsource")
 AddEventHandler("SY_animations:playsharedsource", function(reqstcarryanim,player)
+	debugPrint('playsharedsource triggered, type=' .. tostring(reqstcarryanim))
 	akmon = reqstcarryanim
 	if akmon == "type1" then 
 		carryingBackInProgress = true
@@ -118,48 +155,54 @@ end)
 -----[END REQUEST]-------
 
 RegisterCommand(Config.command, function(source, args)
-	if sycarry then
-		if carryingBackInProgress == true then
-			local closestPlayer = GetClosestPlayer(3)
-			target = GetPlayerServerId(closestPlayer)
-			TriggerServerEvent("SY_Carry_Anim:stop",target)
-			Wait(1000)
-			TriggerEvent('SY_Carry_Anim:client:stop')
-			carryingBackInProgress = false
-			local accepted = false
-		else
-			SetNuiFocus(true, true)
-			SendNUIMessage({
-				message	= "showtypes"
-			})
-			--TriggerEvent("SY_Carry:senderrequest","type1")
+	debugPrint('Command /carry executed')
+	local ok, err = pcall(function()
+		if sycarry then
+			if carryingBackInProgress == true then
+				debugPrint('Stopping carry...')
+				local closestPlayer = GetClosestPlayer(3)
+				target = GetPlayerServerId(closestPlayer)
+				TriggerServerEvent("SY_Carry_Anim:stop",target)
+				Wait(1000)
+				TriggerEvent('SY_Carry_Anim:client:stop')
+				carryingBackInProgress = false
+				local accepted = false
+			else
+				debugPrint('Opening carry menu (NUI focus ON)')
+				SetNuiFocus(true, true)
+				SendNUIMessage({
+					message	= "showtypes"
+				})
+			end
 		end
-    end
+	end)
+	if not ok then
+		debugPrint('ERROR in /carry command: ' .. tostring(err))
+		SetNuiFocus(false, false)
+		SendNUIMessage({message = "hide"})
+	end
 end)
 
 RegisterNUICallback("closetypeselect", function(a, cb)
+    debugPrint('NUI callback: closetypeselect')
     SetNuiFocus(false, false)
     SendNUIMessage({message = "hide"})
     cb('ok')
 end)
 
 RegisterNUICallback("selecttype", function(a, cb)
+    debugPrint('NUI callback: selecttype, type=' .. tostring(a.carrytype))
     CarryTypeChoosed = tostring(a.carrytype)
     SetNuiFocus(false, false)
-	if CarryTypeChoosed == "type1" then
+	if CarryTypeChoosed == "type1" or CarryTypeChoosed == "type2" or CarryTypeChoosed == "type3" then
 		if not carryingBackInProgress then
-			TriggerEvent("SY_Carry:senderrequest",CarryTypeChoosed)
+			debugPrint('Triggering senderrequest for ' .. CarryTypeChoosed)
+			TriggerEvent("SY_Carry:senderrequest", CarryTypeChoosed)
+		else
+			debugPrint('Carry already in progress, ignoring')
 		end
-	end
-	if CarryTypeChoosed == "type2" then
-		if not carryingBackInProgress then
-			TriggerEvent("SY_Carry:senderrequest",CarryTypeChoosed)
-		end
-	end
-	if CarryTypeChoosed == "type3" then
-		if not carryingBackInProgress then
-			TriggerEvent("SY_Carry:senderrequest",CarryTypeChoosed)
-		end
+	else
+		debugPrint('Unknown carry type: ' .. CarryTypeChoosed)
 	end
 	cb('ok')
 end)
@@ -230,6 +273,7 @@ end)
 
 RegisterNetEvent('SY_Carry_Anim:client:stop')
 AddEventHandler('SY_Carry_Anim:client:stop', function()
+	debugPrint('Carry animation stopped')
 	carryingBackInProgress = false
 	ClearPedSecondaryTask(PlayerPedId())
 	DetachEntity(PlayerPedId(), true, false)
@@ -270,4 +314,4 @@ function GetClosestPlayer(radius)
 	end
 end
 
-
+debugPrint('Client script loaded OK — command: /' .. Config.command)
