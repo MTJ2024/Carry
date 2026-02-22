@@ -137,12 +137,13 @@ RegisterCommand(Config.command, function(source, args)
     end
 end)
 
-RegisterNUICallback("closetypeselect", function(a, b)
+RegisterNUICallback("closetypeselect", function(a, cb)
     SetNuiFocus(false, false)
     SendNUIMessage({message = "hide"})
+    cb('ok')
 end)
 
-RegisterNUICallback("selecttype", function(a, b)
+RegisterNUICallback("selecttype", function(a, cb)
     CarryTypeChoosed = tostring(a.carrytype)
     SetNuiFocus(false, false)
 	if CarryTypeChoosed == "type1" then
@@ -160,6 +161,7 @@ RegisterNUICallback("selecttype", function(a, b)
 			TriggerEvent("SY_Carry:senderrequest",CarryTypeChoosed)
 		end
 	end
+	cb('ok')
 end)
 
 --------[ANIMATION FUNCTION]--------

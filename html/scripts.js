@@ -12,8 +12,48 @@ function hideAll() {
 	$('#carrytype').hide();
 }
 
-$(".closetypemenu").click(function(){
-    $.post('http://SY_Carry/closetypeselect', JSON.stringify({}));
+function closeMenu() {
+	closeMain();
+	hideAll();
+	$.post('http://SY_Carry/closetypeselect', JSON.stringify({}));
+}
+
+$(document).ready(function() {
+
+	$(".closetypemenu").click(function(){
+	    closeMenu();
+	});
+
+	$(".carry1select").click(function () {
+		closeMain();
+		hideAll();
+		$.post('http://SY_Carry/selecttype', JSON.stringify({
+			carrytype: "type1"
+		}));
+	});
+
+	$(".carry2select").click(function () {
+		closeMain();
+		hideAll();
+		$.post('http://SY_Carry/selecttype', JSON.stringify({
+			carrytype: "type2"
+		}));
+	});
+
+	$(".carry3select").click(function () {
+		closeMain();
+		hideAll();
+		$.post('http://SY_Carry/selecttype', JSON.stringify({
+			carrytype: "type3"
+		}));
+	});
+
+	$(document).keyup(function(e) {
+		if (e.key === "Escape") {
+			closeMenu();
+		}
+	});
+
 });
 
 window.addEventListener('message', function (event) {
@@ -49,28 +89,4 @@ window.addEventListener('message', function (event) {
 		closeMain();
 		hideAll();
 	}
-});
-
-$(".carry1select").click(function () {
-	closeMain();
-	hideAll();
-	$.post('http://SY_Carry/selecttype', JSON.stringify({
-		carrytype: "type1"
-	}));
-});
-
-$(".carry2select").click(function () {
-	closeMain();
-	hideAll();
-	$.post('http://SY_Carry/selecttype', JSON.stringify({
-		carrytype: "type2"
-	}));
-});
-
-$(".carry3select").click(function () {
-	closeMain();
-	hideAll();
-	$.post('http://SY_Carry/selecttype', JSON.stringify({
-		carrytype: "type3"
-	}));
 });

@@ -47,8 +47,8 @@ body {
     0 0 40px rgba(110, 237, 237, 0.08),
     0 0 80px rgba(130, 50, 200, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px); /* FiveM NUI runs on Chromium/CEF — full support */
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   padding: 30px 36px 36px;
   position: relative;
   z-index: 9999;
@@ -132,7 +132,10 @@ body {
 .card::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border-radius: 16px;
   background: radial-gradient(ellipse at 50% 0%, rgba(110, 237, 237, 0.06) 0%, transparent 65%);
   pointer-events: none;
