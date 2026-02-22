@@ -1,6 +1,10 @@
 --[[
-    MTJ_Carry — Trage-Script fuer ESX Legacy
+    MTJ_Carry — Konfiguration
     (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+    https://github.com/MTJ2024/Carry
+
+    PLAGIATSCHUTZ: Dieses Script ist urheberrechtlich geschuetzt.
+    Unbefugtes Kopieren oder Verbreiten ist untersagt.
 ]]
 
 Config = {}

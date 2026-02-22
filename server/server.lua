@@ -1,10 +1,36 @@
 --[[
     MTJ_Carry — Server-Script
     (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+    https://github.com/MTJ2024/Carry
+
+    PLAGIATSCHUTZ: Dieses Script ist urheberrechtlich geschuetzt.
+    Unbefugtes Kopieren oder Verbreiten ist untersagt.
 ]]
+
+local MTJ_COPYRIGHT = {
+    name    = 'MTJ_Carry',
+    version = '2.0',
+    author  = 'MTJ2024',
+    github  = 'https://github.com/MTJ2024/Carry',
+}
 
 local function debugPrint(msg)
 	print('[MTJ_Carry:Server] ' .. tostring(msg))
+end
+
+-- Copyright-Banner beim Serverstart
+print('^3╔══════════════════════════════════════════════════╗^0')
+print('^3║^0  ^5' .. MTJ_COPYRIGHT.name .. ' v' .. MTJ_COPYRIGHT.version .. '^0')
+print('^3║^0  ^2(c) 2024 ' .. MTJ_COPYRIGHT.author .. ' — Alle Rechte vorbehalten^0')
+print('^3║^0  ^4' .. MTJ_COPYRIGHT.github .. '^0')
+print('^3╚══════════════════════════════════════════════════╝^0')
+
+-- Plagiatschutz: Resource-Name pruefen
+local currentName = GetCurrentResourceName()
+if currentName ~= 'MTJ_Carry' and currentName ~= 'Carry' then
+    print('^1[MTJ_Carry] WARNUNG: Resource wurde umbenannt zu "' .. currentName .. '"!^0')
+    print('^1[MTJ_Carry] Original: MTJ_Carry von MTJ2024^0')
+    print('^1[MTJ_Carry] https://github.com/MTJ2024/Carry^0')
 end
 
 debugPrint('Server-Script wird geladen...')

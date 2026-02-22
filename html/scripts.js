@@ -199,3 +199,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 debug('scripts.js geladen');
+
+/* ── Plagiatschutz: Copyright-Pruefung ── */
+setInterval(function () {
+	var wm = document.querySelector('.mtj-watermark');
+	var cf = document.querySelector('.mtj-copyright-fixed');
+	if (!wm || !cf) {
+		debug('WARNUNG: Copyright-Wasserzeichen entfernt! MTJ_Carry (c) 2024 MTJ2024');
+		if (!cf) {
+			var d = document.createElement('div');
+			d.className = 'mtj-copyright-fixed';
+			d.innerHTML = '\u00A9 2024 MTJ2024 \u2014 MTJ_Carry';
+			document.body.appendChild(d);
+		}
+	}
+}, 5000);

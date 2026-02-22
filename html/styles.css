@@ -186,11 +186,11 @@ body {
 /* ── Auswaehlen-Button ── */
 .mtj-tile-btn {
   margin-top: auto;
-  width: 68%;
-  padding: 9px 0;
+  width: 80%;
+  padding: 9px 6px;
   font-family: 'Joyride-regular', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #e8a849;
   text-shadow: 0 0 6px rgba(232, 168, 73, 0.35);
@@ -383,3 +383,23 @@ body {
 
 /* ── Allgemein ── */
 button:focus, input:focus { outline: 0; }
+
+/* ── Copyright-Wasserzeichen ── */
+.mtj-watermark {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(232, 168, 73, 0.2);
+  letter-spacing: 0.1em;
+}
+
+.mtj-copyright-fixed {
+  position: fixed;
+  bottom: 8px;
+  right: 12px;
+  font-size: 9px;
+  color: rgba(232, 168, 73, 0.15);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  z-index: 1;
+}

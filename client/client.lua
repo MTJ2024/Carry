@@ -1,10 +1,35 @@
 --[[
-    MTJ_Carry — Trage-Script fuer ESX Legacy
+    MTJ_Carry — Client-Script
     (c) 2024 MTJ2024 — Alle Rechte vorbehalten
+    https://github.com/MTJ2024/Carry
+
+    PLAGIATSCHUTZ: Dieses Script ist urheberrechtlich geschuetzt.
+    Unbefugtes Kopieren oder Verbreiten ist untersagt.
 ]]
+
+local MTJ_COPYRIGHT = {
+    name    = 'MTJ_Carry',
+    version = '2.0',
+    author  = 'MTJ2024',
+    github  = 'https://github.com/MTJ2024/Carry',
+}
 
 local function debugPrint(msg)
 	print('[MTJ_Carry] ' .. tostring(msg))
+end
+
+-- Copyright-Banner im F8-Konsolenfenster
+print('^3══════════════════════════════════════════════════^0')
+print('^5  ' .. MTJ_COPYRIGHT.name .. ' v' .. MTJ_COPYRIGHT.version .. '^0')
+print('^2  (c) 2024 ' .. MTJ_COPYRIGHT.author .. ' — Alle Rechte vorbehalten^0')
+print('^4  ' .. MTJ_COPYRIGHT.github .. '^0')
+print('^3══════════════════════════════════════════════════^0')
+
+-- Plagiatschutz: Resource-Name pruefen
+local currentName = GetCurrentResourceName()
+if currentName ~= 'MTJ_Carry' and currentName ~= 'Carry' then
+    debugPrint('^1WARNUNG: Resource umbenannt zu "' .. currentName .. '"!^0')
+    debugPrint('^1Original: MTJ_Carry von MTJ2024 — https://github.com/MTJ2024/Carry^0')
 end
 
 debugPrint('Client-Script wird geladen...')

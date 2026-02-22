@@ -1,3 +1,15 @@
+--[[
+    ╔══════════════════════════════════════════════════╗
+    ║  MTJ_Carry v2.0                                 ║
+    ║  (c) 2024 MTJ2024 — Alle Rechte vorbehalten     ║
+    ║  https://github.com/MTJ2024/Carry               ║
+    ║                                                  ║
+    ║  Dieses Script ist urheberrechtlich geschuetzt.  ║
+    ║  Unbefugtes Kopieren, Aendern oder Verbreiten    ║
+    ║  ohne Genehmigung ist untersagt.                 ║
+    ╚══════════════════════════════════════════════════╝
+]]
+
 fx_version  'adamant'
 lua54       'yes'
 game        'gta5'
