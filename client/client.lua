@@ -47,7 +47,7 @@ AddEventHandler("SY_Carry:senderrequest", function(CarryTypeChoosed)
 	local reqstcarryanim = CarryTypeChoosed
 	CreateThread(function()
 		while true do
-			Wait(1)
+			Wait(0)
 			if reqstcarryanim ~= nil then
 				if not ESX or not ESX.Game then
 					debugPrint('ERROR: ESX.Game not available')
@@ -90,42 +90,50 @@ AddEventHandler("SY_animations:reciverrequest", function(revicer,reqstcarryanim)
 	Notify(Config.requestmessage,'info')
     local waiting = 0 
     CreateThread(function()
-        while true do
-            Wait(5)
-            if isRequestAnim then
-                if IsControlJustPressed(1, Config.acceptkey) then
-					Notify("Request accepted",'success')
-                    target, distance = ESX.Game.GetClosestPlayer()
-                    if(distance ~= -1 and distance < 3) then
-                        TriggerServerEvent("SY_animations:animationaccepted", revicer,reqstcarryanim)
-                        local accepted = true
-                        isRequestAnim = false
-                    else
-						Notify("Nobody is close enough.",'info')
-                    end
-                elseif IsControlJustPressed(1, Config.declinekey) then
-					Notify("Request denied.",'error')
-					local target = ESX.Game.GetClosestPlayer()
-					sji = GetPlayerServerId(target)
-					TriggerServerEvent("SY_animations:animationdenied", sji)
+        while isRequestAnim do
+            Wait(0)
+            -- Ensure accept/decline keys are not consumed by other systems
+            DisableControlAction(0, Config.acceptkey, true)
+            DisableControlAction(0, Config.declinekey, true)
+
+            if IsDisabledControlJustPressed(0, Config.acceptkey) then
+                debugPrint('Accept key pressed (control ' .. Config.acceptkey .. ')')
+                Notify("Request accepted",'success')
+                if not ESX or not ESX.Game then
+                    debugPrint('ERROR: ESX.Game not available for accept')
                     isRequestAnim = false
+                    break
                 end
-            else
-                break
+                local target, distance = ESX.Game.GetClosestPlayer()
+                if(distance ~= -1 and distance < 3) then
+                    TriggerServerEvent("SY_animations:animationaccepted", revicer,reqstcarryanim)
+                    accepted = true
+                    isRequestAnim = false
+                else
+                    Notify("Nobody is close enough.",'info')
+                    debugPrint('Accept failed: nobody close enough')
+                end
+            elseif IsDisabledControlJustPressed(0, Config.declinekey) then
+                debugPrint('Decline key pressed (control ' .. Config.declinekey .. ')')
+                Notify("Request denied.",'error')
+                if ESX and ESX.Game then
+                    local target = ESX.Game.GetClosestPlayer()
+                    local sji = GetPlayerServerId(target)
+                    TriggerServerEvent("SY_animations:animationdenied", sji)
+                end
+                isRequestAnim = false
             end
         end
+        debugPrint('reciverrequest loop ended')
     end)
     CreateThread(function()
-        while true do 
+        while isRequestAnim do 
             Wait(100)
             waiting = waiting + 1
-            if isRequestAnim then
-                if waiting > 100 then
-                    isRequestAnim = false
-					Notify("Request has expired",'info')
-                end
-            else
-                break
+            if waiting > 100 then
+                isRequestAnim = false
+                Notify("Request has expired",'info')
+                debugPrint('Request expired after timeout')
             end
         end
     end)
