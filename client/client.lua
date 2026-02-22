@@ -49,7 +49,7 @@ AddEventHandler("SY_Carry:senderrequest", function(CarryTypeChoosed)
 					DrawMarker(0, playerX, playerY, playerZ+1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.2, 0.2, 0.2, 155, 77, 219, 70, true, true, 2, true, false, false, false)
 					if IsControlJustPressed(0, 38) then
 						TriggerServerEvent("SY_animations:animrequest", GetPlayerServerId(closestPlayer),reqstcarryanim)
-						Notify("Request send",'sucess')
+						Notify("Request sent",'success')
 						debugPrint('Request sent to player')
 						break
 					end

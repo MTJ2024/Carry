@@ -1,4 +1,9 @@
-/* SY_Carry NUI — zero jQuery dependency (vanilla JS only) */
+/* SY_Carry NUI — zero external dependencies (vanilla JS + XMLHttpRequest) */
+
+/* ── GetParentResourceName polyfill (must be first — only used outside FiveM for testing) ── */
+if (typeof GetParentResourceName === 'undefined') {
+	window.GetParentResourceName = function() { return 'SY_Carry'; };
+}
 
 function debug(msg) {
 	console.log('[SY_Carry] ' + msg);
@@ -29,22 +34,19 @@ function showById(id) {
 	if (el) el.style.display = '';
 }
 
-/* ── NUI POST helper (no jQuery needed) ── */
+/* ── NUI POST via XMLHttpRequest (most compatible with FiveM CEF) ── */
 
 function nuiPost(endpoint, data) {
 	try {
-		var url = 'https://' + GetParentResourceName() + '/' + endpoint;
-		fetch(url, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data || {})
-		}).then(function(resp) {
-			debug('POST ' + endpoint + ' ok');
-		}).catch(function(err) {
-			debug('POST ' + endpoint + ' error: ' + err);
-		});
+		var resName = GetParentResourceName();
+		var url = 'https://' + resName + '/' + endpoint;
+		debug('POST ' + url);
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', url, true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(data || {}));
 	} catch (e) {
-		debug('nuiPost exception: ' + e);
+		debug('nuiPost error: ' + e);
 	}
 }
 
@@ -55,7 +57,7 @@ function closeMenu() {
 	debug('closeMenu done');
 }
 
-/* ── NUI message handler (MUST be registered first — before any jQuery code) ── */
+/* ── NUI message handler (registered immediately — no dependencies) ── */
 
 window.addEventListener('message', function (event) {
 	var item = event.data;
@@ -147,11 +149,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	debug('All handlers attached OK');
 });
-
-/* ── GetParentResourceName polyfill for NUI ── */
-
-if (typeof GetParentResourceName === 'undefined') {
-	function GetParentResourceName() { return 'SY_Carry'; }
-}
 
 debug('scripts.js loaded OK');

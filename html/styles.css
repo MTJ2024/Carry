@@ -40,15 +40,10 @@ body {
 .carrytype-container {
   width: 68%;
   max-width: 1050px;
-  background: linear-gradient(145deg, rgba(18, 4, 32, 0.92), rgba(8, 8, 22, 0.95), rgba(4, 22, 36, 0.92));
+  background: linear-gradient(145deg, rgba(18, 4, 32, 0.96), rgba(8, 8, 22, 0.98), rgba(4, 22, 36, 0.96));
   border: 1px solid rgba(110, 237, 237, 0.25);
   border-radius: 20px;
-  box-shadow:
-    0 0 40px rgba(110, 237, 237, 0.08),
-    0 0 80px rgba(130, 50, 200, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 30px rgba(110, 237, 237, 0.08);
   padding: 30px 36px 36px;
   position: relative;
   z-index: 9999;
@@ -75,7 +70,6 @@ body {
   color: #6eedee;
   text-shadow: 0 0 18px rgba(110, 237, 237, 0.55), 0 0 4px rgba(110, 237, 237, 0.3);
   letter-spacing: 0.12em;
-  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.25);
 }
 
 /* ── Close button ── */
@@ -144,9 +138,7 @@ body {
 .card:hover {
   transform: translateY(-4px);
   border-color: rgba(110, 237, 237, 0.45);
-  box-shadow:
-    0 8px 32px rgba(110, 237, 237, 0.1),
-    0 0 20px rgba(130, 50, 200, 0.08);
+  box-shadow: 0 4px 20px rgba(110, 237, 237, 0.1);
 }
 
 /* ── Card image ── */
@@ -213,9 +205,7 @@ body {
   color: #fff;
   background: rgba(110, 237, 237, 0.25);
   border-color: rgba(110, 237, 237, 0.7);
-  box-shadow:
-    0 0 14px rgba(110, 237, 237, 0.3),
-    inset 0 0 8px rgba(110, 237, 237, 0.1);
+  box-shadow: 0 0 10px rgba(110, 237, 237, 0.2);
 }
 
 .card-btn:active {
