@@ -1,389 +1,234 @@
-@import url('https://kit-pro.fontawesome.com/releases/v5.11.2/css/pro.min.css');
-
 @font-face {
   font-family: 'BebasNeueBold';
   src: url('./fonts/BebasNeueBold.ttf');
 }
+
 @font-face {
-    font-family: 'Joyride-regular';
-    src: url("fonts/Joyride-Regular.otf")
+  font-family: 'Joyride-regular';
+  src: url('./fonts/Joyride-Regular.otf');
 }
 
-*{
-	user-select: none; /* supported by Chrome and Opera */
-   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Firefox */
-   -ms-user-select: none; /* Internet Explorer/Edge */
-}
-
-*{
-	user-select: none; /* supported by Chrome and Opera */
-   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Firefox */
-   -ms-user-select: none; /* Internet Explorer/Edge */
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 html {
   overflow: hidden;
-  font-family: 'Open Sans', sans-serif;
 }
 
-body{
-	display: none;
-	color: #a8a8aa;
+body {
+  display: none;
+  color: #c0c0c4;
+  font-family: 'BebasNeueBold', sans-serif;
 }
 
-.carrytype1 {
-	/*background-color: rgb(0, 0, 0);*/
-	background-image :linear-gradient(105deg, rgba(100, 6, 155, 0.637), rgba(62, 6, 95, 0.589), rgba(0, 0, 0, 0.548));
-	border: 2px solid rgb(110,237,237);
-	border-radius: 25px;
-	width: 25%;
-	height: 60%;
-	margin: 0;
-	position: absolute;
-	top: 60%;
-	left: 18%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	z-index: 9999999;  
-	padding: 1.0%;
-}
-
-.carrytype1 img {
-	position: absolute;
-	width: 65%;
-	height: 65%;
-	left: 50%;
-	top: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);	
-	z-index: 9999999;
-}
-
-.carry1select {
-	position: absolute;
-	margin: 0;
-	background-color: rgba(0, 0, 0, 1);
-	color: rgb(110,237,237);
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 8px;
-	padding-right: 9px;
-	text-align: center;
-	left: 50%;
-	top: 90%;	
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	width: 50%;
-    font-family: 'Joyride-regular';
-    letter-spacing: 0.15em;
-    font-weight: normal;
-	font-size: 18px;
-    text-transform: uppercase;
-    text-shadow: 0 0 0.5em rgb(110,237,237);
-    background-color: rgba(44, 157, 157, 0.411);
-    border: 0.15em solid rgb(255, 255, 255);
-    border-radius: 1em;
-    outline: none;
-}
-
-.carry1select:hover {
-	cursor: pointer;
-	color: rgb(255, 255, 255);
-	border-color: #ffffff;
-	background: rgb(110,237,237);
-	text-decoration: none;
-	box-shadow: 0 0 1em 0.25em rgb(110,237,237), 
-    0 0 4em 1 em rgb(65, 243,243,0.781), 
-    inset 0 0 0.75em 0.25em rgb(110,237,237) ;
-}
-
-
-.carrytype2 {
-	/*background-color: rgba(0, 0, 0, 1);*/
-	background-image :linear-gradient(105deg, rgba(100, 6, 155, 0.637), rgba(62, 6, 95, 0.589), rgba(0, 0, 0, 0.548));
-	border: 2px solid rgb(110,237,237);
-	border-radius: 25px;
-	width: 25%;
-	height: 60%;
-	margin: 0;
-	position: absolute;
-	top: 60%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	z-index: 9999999;  
-	padding: 1.0%;
-}
-
-.carrytype2 img {
-	position: absolute;
-	width: 65%;
-	height: 65%;
-	left: 50%;
-	top: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);	
-	z-index: 9999999;
-}
-
-.carry2select {
-	position: absolute;
-	margin: 0;
-	background-color: rgba(0, 0, 0, 1);
-	color: rgb(110,237,237);
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 8px;
-	padding-right: 9px;
-	text-align: center;
-	left: 50%;
-	top: 90%;	
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	width: 50%;
-    font-family: 'Joyride-regular';
-    letter-spacing: 0.15em;
-    font-weight: normal;
-	font-size: 18px;
-    text-transform: uppercase;
-    text-shadow: 0 0 0.5em rgb(110,237,237);
-    background-color: rgba(44, 157, 157, 0.411);
-    border: 0.15em solid rgb(255, 255, 255);
-    border-radius: 1em;
-    outline: none;
-}
-
-.carry2select:hover {
-	cursor: pointer;
-	color: rgb(255, 255, 255);
-	border-color: #ffffff;
-	background: rgb(110,237,237);
-	text-decoration: none;
-	    box-shadow: 0 0 1em 0.25em rgb(110,237,237), 
-    0 0 4em 1 em rgb(65, 243,243,0.781), 
-    inset 0 0 0.75em 0.25em rgb(110,237,237) ;
-}
-
-.carrytype3 {
-	/*background-color: rgba(0, 0, 0, 1);*/
-	background-image :linear-gradient(105deg, rgba(100, 6, 155, 0.637), rgba(62, 6, 95, 0.589), rgba(0, 0, 0, 0.548));
-	border: 2px solid rgb(110,237,237);
-	border-radius: 25px;
-	width: 25%;
-	height: 60%;
-	margin: 0;
-	position: absolute;
-	top: 60%;
-	left: 82%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	z-index: 9999999;  
-	padding: 1.0%;
-}
-
-.carrytype3 img {
-	position: absolute;
-	width: 65%;
-	height: 65%;
-	left: 50%;
-	top: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);	
-	z-index: 9999999;
-}
-
-.carry3select {
-	position: absolute;
-	margin: 0;
-	background-color: rgba(0, 0, 0, 1);
-	color: rgb(110,237,237);
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 8px;
-	padding-right: 9px;
-	text-align: center;
-	left: 50%;
-	top: 90%;	
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	width: 50%;
-    font-family: 'Joyride-regular';
-    letter-spacing: 0.15em;
-    font-weight: normal;
-	font-size: 18px;
-    text-transform: uppercase;
-    text-shadow: 0 0 0.5em rgb(110,237,237);
-    background-color: rgba(44, 157, 157, 0.411);
-    border: 0.15em solid rgb(255, 255, 255);
-    border-radius: 1em;
-    outline: none;
-}
-
-.carry3select:hover {
-	cursor: pointer;
-	color: rgb(255, 255, 255);
-	border-color: #ffffff;
-	background: rgb(110,237,237);
-	text-decoration: none;
-	    box-shadow: 0 0 1em 0.25em rgb(110,237,237), 
-    0 0 4em 1 em rgb(65, 243,243,0.781), 
-    inset 0 0 0.75em 0.25em rgb(110,237,237) ;
-}
-
-.carrytextheader {
-	padding-top: 10px;
-	font-size: 35px;
-	color: rgb(110,237,237);
-	text-align:center;
-}
-
-.carrytextkey {
-	padding-bottom: 10px;
-	font-size: 35px;
-	color: #ffffff;
-	text-align:center;
-}
-
-.carrytextmain {
-	font-size: 20px;
-	font-weight: 200;
-	color: #b495f8;
-	text-shadow: 0 0 0.5em rgb(195, 110, 237);
-	-webkit-text-stroke: 0.5px rgb(255, 255, 255);
-	text-align:center;
-	font-family: 'DreamRoad';
-}
-
-h4{
-	text-align:center;
-	margin-top: 20px;
-	margin-bottom: 0;
-}
-
-button:focus,
-input:focus {
-  outline:0;
-}
-
-.container {
-	color: #ffffff;
-	font-size: 30px;
-}
-
+/* ── Full-screen overlay ── */
 .full-screen {
-  width: 100%;
-  height:100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.btnQuit {
-	width:100%;
-}
-
-.closetypemenu {
-	position: absolute;
-	left: 98%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	top: 3.5%
-}
-
-.carry-container {
-	width: 25%;
-	background-color: rgba(0, 0, 0, 0.70);
-	border: 1px solid #ffffff;
-	border-radius: 45px;
-	margin: 0;
-	position: absolute;
-	top: 85%;
-	left: 85%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	padding: 10px;
-	z-index: 9999999;
-}
-
+/* ── Main container ── */
 .carrytype-container {
-	width: 70%;
-	height: 50%;
-	align-items: center;
-	/*background-color: rgba(0, 0, 0, 0.70);*/
-	background-image: linear-gradient(135deg, rgba(87, 0, 95, 0.637), rgba(0, 0, 0, 0.432), rgba(1, 81, 134, 0.548));
-	border: 3px solid #7a27c798;
-	box-shadow: 0 0 0.5em rgba(234, 0, 255, 0.637);
-	border-radius: 45px;
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	z-index: 9999999;
-	padding-bottom:7%;
+  width: 68%;
+  max-width: 1050px;
+  background: linear-gradient(145deg, rgba(18, 4, 32, 0.92), rgba(8, 8, 22, 0.95), rgba(4, 22, 36, 0.92));
+  border: 1px solid rgba(110, 237, 237, 0.25);
+  border-radius: 20px;
+  box-shadow:
+    0 0 40px rgba(110, 237, 237, 0.08),
+    0 0 80px rgba(130, 50, 200, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px); /* FiveM NUI runs on Chromium/CEF — full support */
+  -webkit-backdrop-filter: blur(12px);
+  padding: 30px 36px 36px;
+  position: relative;
+  z-index: 9999;
+  animation: containerIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes containerIn {
+  from { opacity: 0; transform: scale(0.94) translateY(14px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 28px;
 }
 
 .CarryTypeMenuHeaderText {
-	position: absolute;
-	margin: 0;
-	font-family: 'Joyride-regular' ;
-	font-size: 40px;
-	font-stretch: condensed;
-	text-shadow: 0 0 0.5em rgb(110,237,237);
-	color: #70dbff;
-	text-align: center;
-	-webkit-text-stroke: 0.5px rgb(255, 255, 255);
-	top: 12.5%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	z-index: 9999999;
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 32px;
+  color: #6eedee;
+  text-shadow: 0 0 18px rgba(110, 237, 237, 0.55), 0 0 4px rgba(110, 237, 237, 0.3);
+  letter-spacing: 0.12em;
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.25);
 }
 
-.header {
-  width:100%;
-  height: 25%;
-  color: #ffffff;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-bottom:12%;
-}
-
+/* ── Close button ── */
 .btnQuit {
-	width:100%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.closetypemenu {
-	position: absolute;
-	left: 95.5%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	overflow: hidden;
-	top: 8%
+.btnQuit:hover {
+  background: rgba(255, 80, 80, 0.15);
+  border-color: rgba(255, 80, 80, 0.4);
+  color: #ff6b6b;
 }
 
-.body {
-	overflow: auto;
-	width: 100%;
-	height: 90%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	font-family: BebasNeueBold;
+/* ── Cards grid ── */
+.cards {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
 }
 
-*{
-	font-family: BebasNeueBold;
+/* ── Individual card ── */
+.card {
+  flex: 1;
+  max-width: 300px;
+  background: linear-gradient(160deg, rgba(100, 6, 155, 0.22), rgba(40, 4, 65, 0.28), rgba(6, 30, 50, 0.3));
+  border: 1px solid rgba(110, 237, 237, 0.18);
+  border-radius: 16px;
+  padding: 28px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(110, 237, 237, 0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(110, 237, 237, 0.45);
+  box-shadow:
+    0 8px 32px rgba(110, 237, 237, 0.1),
+    0 0 20px rgba(130, 50, 200, 0.08);
+}
+
+/* ── Card image ── */
+.card-icon {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.card-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(110, 237, 237, 0.2));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .card-icon img {
+  filter: drop-shadow(0 0 16px rgba(110, 237, 237, 0.35));
+  transform: scale(1.05);
+}
+
+/* ── Card labels ── */
+.carrytextmain {
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 18px;
+  color: #c4a5f7;
+  text-shadow: 0 0 12px rgba(195, 110, 237, 0.4);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.card-desc {
+  font-family: 'BebasNeueBold', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* ── Select button (shared) ── */
+.card-btn {
+  margin-top: auto;
+  width: 70%;
+  padding: 10px 0;
+  font-family: 'Joyride-regular', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6eedee;
+  text-shadow: 0 0 8px rgba(110, 237, 237, 0.4);
+  background: rgba(44, 157, 157, 0.12);
+  border: 1px solid rgba(110, 237, 237, 0.35);
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.card-btn:hover {
+  color: #fff;
+  background: rgba(110, 237, 237, 0.25);
+  border-color: rgba(110, 237, 237, 0.7);
+  box-shadow:
+    0 0 14px rgba(110, 237, 237, 0.3),
+    inset 0 0 8px rgba(110, 237, 237, 0.1);
+}
+
+.card-btn:active {
+  transform: scale(0.96);
+  background: rgba(110, 237, 237, 0.35);
+}
+
+/* ── Legacy class aliases — keep JS click selectors (.carry1select etc.) working ── */
+.carry1select,
+.carry2select,
+.carry3select {
+  /* No extra styles needed; these elements already have .card-btn */
+}
+
+/* ── Utility ── */
+button:focus,
+input:focus {
+  outline: 0;
 }

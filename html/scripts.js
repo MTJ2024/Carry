@@ -5,6 +5,12 @@ function openMain() {
 	$("body").css("display", "block");
 }
 
+function hideAll() {
+	$('#carryreceiever').hide();
+	$('#carryrequester').hide();
+	$('#carryed').hide();
+	$('#carrytype').hide();
+}
 
 $(".closetypemenu").click(function(){
     $.post('http://SY_Carry/closetypeselect', JSON.stringify({}));
@@ -13,55 +19,41 @@ $(".closetypemenu").click(function(){
 window.addEventListener('message', function (event) {
 
 	var item = event.data;
-	
+
 	if (item.message == "showcarryrequestreceiever") {
-		$('#carryrequester').hide();
-		$('#carryed').hide();
-		$('#carrytype').hide();
+		hideAll();
 		$('#carryreceiever').show();
 		openMain();
-	}	
-	
+	}
+
 	if (item.message == "showcarryrequestrequester") {
-		$('#carryreceiever').hide();
-		$('#carryed').hide();
-		$('#carrytype').hide();
+		hideAll();
 		$('#carryrequester').show();
 		document.getElementById("secondsremainingrequest").innerHTML = item.remainingseconds;
 		openMain();
-	}		
-	
+	}
+
 	if (item.message == "showcarryed") {
-		$('#carryreceiever').hide();
-		$('#carryrequester').hide();
-		$('#carrytype').hide();
+		hideAll();
 		$('#carryed').show();
 		openMain();
-	}	
+	}
 
 	if (item.message == "showtypes") {
-		$('#carryreceiever').hide();
-		$('#carryrequester').hide();
-		$('#carryed').hide();
+		hideAll();
 		$('#carrytype').show();
 		openMain();
-	}			
-	
+	}
+
 	if (item.message == "hide") {
 		closeMain();
-		$('#carryreceiever').hide();
-		$('#carryrequester').hide();
-		$('#carrytype').hide();
-		$('#carryed').hide();
+		hideAll();
 	}
 });
 
 $(".carry1select").click(function () {
 	closeMain();
-	$('#carryreceiever').hide();
-	$('#carryrequester').hide();
-	$('#carryed').hide();
-	$('#carrytype').hide();
+	hideAll();
 	$.post('http://SY_Carry/selecttype', JSON.stringify({
 		carrytype: "type1"
 	}));
@@ -69,10 +61,7 @@ $(".carry1select").click(function () {
 
 $(".carry2select").click(function () {
 	closeMain();
-	$('#carryreceiever').hide();
-	$('#carryrequester').hide();
-	$('#carryed').hide();
-	$('#carrytype').hide();
+	hideAll();
 	$.post('http://SY_Carry/selecttype', JSON.stringify({
 		carrytype: "type2"
 	}));
@@ -80,10 +69,7 @@ $(".carry2select").click(function () {
 
 $(".carry3select").click(function () {
 	closeMain();
-	$('#carryreceiever').hide();
-	$('#carryrequester').hide();
-	$('#carryed').hide();
-	$('#carrytype').hide();
+	hideAll();
 	$.post('http://SY_Carry/selecttype', JSON.stringify({
 		carrytype: "type3"
 	}));
